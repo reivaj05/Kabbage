@@ -1,3 +1,4 @@
+{% load i18n %}
 <div id="navigation-bar" class="container">
     <div class="navbar navbar-inverse" role="navigation">
         <div class="navbar-header">
@@ -12,11 +13,15 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <form class="navbar-form" action="{% url 'common:search' %}">
+                    <form class="navbar-form" action="{% url 'common:search' %}" method="get">
                         <div class="form-group">
-                          <input type="text" class="form-control" placeholder="Enter your search here">
+                            <input 
+                                type="text" class="form-control"
+                                required="true" name="query"
+                                placeholder="Enter your search here"
+                            >
                         </div>
-                        <button type="submit" class="btn btn-default">Search</button>
+                        <button type="submit" class="btn btn-default">{% trans "Search" %}</button>
                     </form>
                 </li>
             </ul><!-- navbar-nav -->

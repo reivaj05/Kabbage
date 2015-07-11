@@ -24,9 +24,5 @@ class SearchForm(forms.Form):
         super(SearchForm, self).__init__(*args, **kwargs)
         self.add_placeholder(self.fields['query'], _('Insert your search here'))
 
-    def is_valid(self):
-        is_valid = super(SearchForm, self).is_valid()
-        return is_valid
-
     def add_placeholder(self, field, placeholder):
         field.widget.attrs['placeholder'] = placeholder
