@@ -2,9 +2,11 @@ from django.conf.urls import patterns, include, url, static
 from django.conf import settings
 from django.contrib import admin
 
-urlpatterns = patterns('',
-                       url(r'^admin/', include(admin.site.urls)),
-                       )
+urlpatterns = patterns(
+    '',
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^', include('common.urls', namespace='common')),
+)
 
 
 if settings.DEBUG:
