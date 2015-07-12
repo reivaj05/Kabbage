@@ -30,14 +30,15 @@
 <div class="col-md-6">
     {% if wikipedia_error %}
         <div class="alert alert-danger">
-            {{ wikipedia_error }}
+            {% trans wikipedia_error %}
         </div>
     {% else %}
         <h1>{% trans "Wikipedia results" %}</h1>
         <div class="list-group">
         {% for result in wikipedia_results %}
             <li>
-                <a class="list-group-item" href="https://en.wikipedia.org/wiki/{{ result|iriencode }}" target="_blank">
+                <a class="list-group-item" href="https://en.wikipedia.org/wiki/{{ result|iriencode }}" 
+                    target="_blank">
                     {{ result }}
                 </a>
             </li>
