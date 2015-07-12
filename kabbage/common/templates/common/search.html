@@ -6,7 +6,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-8">
             <h1>{% trans "Search" %}</h1>
             <form action="{% url 'common:search' %}" method="get">
                 {% bootstrap_form form %}
@@ -16,6 +16,7 @@
             </form>
         </div><!-- col-md -->
     </div><!-- row -->
+    {% include 'common/search_results.html' %}
 </div><!-- container -->
 
 {% endblock %}

@@ -1,0 +1,51 @@
+{% load i18n %}
+
+<div class="col-md-8">
+    {% if twitter_error %}
+        <div class="alert alert-danger">
+            {% trans twitter_error %}
+        </div>
+    {% else %}
+    	<h1>{% trans "Twitter results" %}</h1>
+        <div class="list-group>">
+            {% for result in twitter_results %}
+                <li>
+                    <div class="list-group-item">
+                        <p>
+                            <img src="{{ result.user.profile_image_url }}"/>
+                            <strong>{{ result.user.name }}</strong>
+                        </p>
+                        <a href="https://twitter.com/statuses/{{ result.id_str }}" target="_blank">{{ result.text }}</a>
+                    </div>
+                </li>
+            {% empty %}
+                <div class="alert alert-warning">
+                    <p>{% trans "No Twitter results" %}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+
+<div class="col-md-6">
+    {% if wikipedia_error %}
+        <div class="alert alert-danger">
+            {{ wikipedia_error }}
+        </div>
+    {% else %}
+        <h1>{% trans "Wikipedia results" %}</h1>
+        <div class="list-group">
+        {% for result in wikipedia_results %}
+            <li>
+                <a class="list-group-item" href="https://en.wikipedia.org/wiki/{{ result|iriencode }}" target="_blank">
+                    {{ result }}
+                </a>
+            </li>
+        {% empty %}
+            <div class="alert alert-warning">
+                <p>{% trans "No Wikipedia results" %}</p>
+            </div>
+        {% endfor %}
+        </ol>
+    {% endif %}
+</div>
