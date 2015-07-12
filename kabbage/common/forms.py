@@ -22,7 +22,9 @@ class SearchForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(SearchForm, self).__init__(*args, **kwargs)
-        self.add_placeholder(self.fields['query'], _('Insert your search here'))
+        self.add_placeholder(
+            self.fields['query'],
+            _('Insert your search here'))
 
     def add_placeholder(self, field, placeholder):
         field.widget.attrs['placeholder'] = placeholder

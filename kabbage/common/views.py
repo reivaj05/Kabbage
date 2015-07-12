@@ -31,8 +31,6 @@ class SearchFormView(FormView):
             if 'search_criteria' in request.GET:
                 sc = request.GET.getlist('search_criteria')
                 self.get_data(query, 'T' in sc, 'W' in sc)
-                #context['twitter_results'] = self.get_page(page, context['twitter_results'])
-                #context['wikipedia_results'] = self.get_page(page, context['wikipedia_results'])
         self.context['form'] = form
         return self.render_to_response(self.get_context_data(**self.context))
 
@@ -44,7 +42,7 @@ class SearchFormView(FormView):
             # If page is not an integer, deliver first page.
             objects = paginator.page(1)
         except EmptyPage:
-            # If page is out of range (e.g. 9999), deliver last page of results.
+            # If page is out of range, deliver last page of results.
             objects = paginator.page(paginator.num_pages)
         return objects
 
@@ -57,12 +55,18 @@ class SearchFormView(FormView):
     def get_twitter_data(self, query):
         self.context['sct'] = True
         self.context['page_twitter'] = self.page_twitter
-        twitter_api = twython.Twython(settings.TWITTER_API_KEY, access_token=settings.TWITTER_ACCESS_TOKEN)
+        twitter_api = twython.Twython(
+            settings.TWITTER_API_KEY,
+            access_token=settings.TWITTER_ACCESS_TOKEN
+        )
         try:
-            self.context['twitter_results'] = twitter_api.search(q=query, count=100)['statuses']
-            self.context['twitter_results'] = self.get_page(self.page_twitter, self.context['twitter_results'])
+            self.context['twitter_results'] = twitter_api.search(
+                q=query, count=100)['statuses']
+            self.context['twitter_results'] = self.get_page(
+                self.page_twitter, self.context['twitter_results']
+            )
         except twython.TwythonAuthError:
-            self.context['twitter_error'] = 'Twitter API authentification error'
+            self.context['twitter_error'] = 'Twitter API authentication error'
         except twython.TwythonRateLimitError:
             self.context['twitter_error'] = 'Rate limit error: Please wait before searching again'
         except twython.TwythonError:
@@ -73,6 +77,7 @@ class SearchFormView(FormView):
         self.context['page_wikipedia'] = self.page_wikipedia
         try:
             self.context['wikipedia_results'] = wikipedia.search(query, results=100)
-            self.context['wikipedia_results'] = self.get_page(self.page_wikipedia, self.context['wikipedia_results'])
+            self.context['wikipedia_results'] = self.get_page(
+                self.page_wikipedia, self.context['wikipedia_results'])
         except (wikipedia.HTTPTimeoutError, ConnectionError):
             self.context['wikipedia_error'] = "Wikipedia is not responding"
