@@ -1,14 +1,12 @@
-Kabagge
+Twitter & Wikipedia results
 ===========
 
-As a Kabbage developer, I want to see how you code a lightweight application, so that I can get a feel for a your
-skills and strengths.
+Simple Application to retrieve results from Twitter and Wikipedia passing a query as parameter
 
 ### Feature work
 
 * Improvement and refactoring of code on results_search.html
 * Add ‘limit results those near me’ option
-* Deploy to heroku
 
 ### Requirements
 
